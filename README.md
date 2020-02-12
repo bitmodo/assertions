@@ -1,2 +1,12 @@
-# assertions
-A header-only C library for assertions
+# Assertions
+[![GitHub](https://img.shields.io/github/license/codmf/assertions)](https://github.com/codmf/assertions/blob/master/LICENSE)
+[![Releases](https://img.shields.io/github/v/release/codmf/assertions?include_prereleases&sort=semver)](https://github.com/codmf/assertions/releases)
+[![Build status](https://img.shields.io/travis/codmf/assertions)](https://travis-ci.org/codmf/assertions)
+
+Assertions is a header-only assertions library for C and C++.
+The reason behind this is the lack of an assertion library for C.
+There is [Snowhouse](https://github.com/banditcpp/snowhouse), but that is for C++ and isn't header-only.
+The only other real assertions can only be found in test libraries, and none of those are header-only.
+
+This project fills the gap!
+It provides a simple, easy-to-use library for writing tests that don't use any dependencies.
