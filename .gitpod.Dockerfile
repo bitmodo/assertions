@@ -9,7 +9,6 @@ RUN apt-get update \
         python3-pip=18.1-5 \
         python3-setuptools=40.8.0-1 \
         python3-wheel=0.32.3-2 \
-        ninja-build=1.8.2-1 \
         valgrind=1:3.14.0-2ubuntu6 \
         ccache=3.6-1 \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
@@ -18,4 +17,4 @@ RUN apt-get update \
 USER gitpod
 
 # Install pip packages
-RUN pip3 install meson==0.53.0 gcovr==4.2
+RUN pip3 install meson==0.53.0 gcovr==4.2 ninja==1.8.2

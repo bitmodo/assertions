@@ -26,7 +26,7 @@ jobs:
     - os: osx
 
 install:
-- pip3 install meson==0.53.0 gcovr==4.2 ninja==1.8.2
+- python3 -m pip install --disable-pip-version-check -I pip==19.3.1 meson==0.53.0 gcovr==4.2 ninja==1.8.2
 
 script:
 - mkdir build && cd build
