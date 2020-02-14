@@ -1,8 +1,7 @@
 language: python
-# python: 3.8
 cache: ccache
 
-matrix:
+jobs:
   include:
     - name: "Python 3.8.0 on Linux"
       python: 3.8           # this works for Linux but is ignored on macOS or Windows
@@ -20,8 +19,6 @@ matrix:
         - python -m pip install --upgrade pip
       install: python -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
       env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
-
-#install: python -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
 
 script:
 - mkdir build && cd build
