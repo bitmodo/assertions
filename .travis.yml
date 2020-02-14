@@ -1,17 +1,22 @@
 language: python
-cache: ccache
+cache:
+- pip
+- ccache
 
 jobs:
   include:
-    - name: "Python 3.8.0 on Linux"
+    - name: "Linux"
       python: 3.8           # this works for Linux but is ignored on macOS or Windows
       install: python -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
-    - name: "Python 3.7.4 on macOS"
+    - name: "macOS"
       os: osx
       osx_image: xcode11.2  # Python 3.7.4 running on macOS 10.14.4
       language: shell       # 'language: python' is an error on Travis CI macOS
-      install: python3 -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
-    - name: "Python 3.8.0 on Windows"
+      install:
+      - brew install ccache
+      - export PATH="/usr/local/opt/ccache/libexec:$PATH"
+      - python3 -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
+    - name: "Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:

@@ -1,5 +1,5 @@
 # Assertions
-[![GitHub](https://img.shields.io/github/license/codmf/assertions)](https://github.com/codmf/assertions/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/codmf/assertions)](https://github.com/codmf/assertions/blob/master/UNLICENSE)
 [![Releases](https://img.shields.io/github/v/release/codmf/assertions?include_prereleases&sort=semver)](https://github.com/codmf/assertions/releases)
 [![Build status](https://img.shields.io/travis/codmf/assertions)](https://travis-ci.org/codmf/assertions)
 

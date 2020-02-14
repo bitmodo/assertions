@@ -27,17 +27,21 @@ tests = [
     {'name': 'zero-fail', 'src': files('zero_fail.c'), 'type': 'fail'},
 ]
 
-foreach test : tests
-    name = test.get('name')
-    src = test.get('src')
-    type = test.get('type', 'normal')
+if not compiler.has_header('assert.h')
+    warning('Could not run any tests, because the assert header could not be found. Make sure you have a C standard library installed.')
+else
+    foreach test : tests
+        name = test.get('name')
+        src = test.get('src')
+        type = test.get('type', 'normal')
 
-    if type == 'normal'
-        should_fail = false
-    elif type == 'fail'
-        should_fail = true
-    endif
+        if type == 'normal'
+            should_fail = false
+        elif type == 'fail'
+            should_fail = true
+        endif
 
-    e = executable('test-' + name, src, dependencies: [assertions_dep])
-    test(name, e, should_fail: should_fail)
-endforeach
+        e = executable('test-' + name, src, dependencies: [assertions_dep])
+        test(name, e, should_fail: should_fail)
+    endforeach
+endif
