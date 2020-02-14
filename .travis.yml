@@ -3,9 +3,9 @@ group: travis_latest
 language: python
 cache: ccache
 
-# os:
-# - linux
-# - osx
+os:
+- linux
+- osx
 
 jobs:
   include:
@@ -25,7 +25,7 @@ jobs:
     - os: osx
 
 install:
-- pip install meson==0.53.0 gcovr==4.2 ninja==1.8.2
+- pip3 install meson==0.53.0 gcovr==4.2 ninja==1.8.2
 
 script:
 - mkdir build && cd build
