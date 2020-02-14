@@ -1,33 +1,27 @@
-# dist: bionic
 language: python
-python: 3.8
+# python: 3.8
 cache: ccache
 
-# os:
-# - linux
-# - osx
-
-jobs:
+matrix:
   include:
     - name: "Python 3.8.0 on Linux"
       python: 3.8           # this works for Linux but is ignored on macOS or Windows
+      install: python -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
     - name: "Python 3.7.4 on macOS"
       os: osx
       osx_image: xcode11.2  # Python 3.7.4 running on macOS 10.14.4
       language: shell       # 'language: python' is an error on Travis CI macOS
+      install: python3 -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
     - name: "Python 3.8.0 on Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
       language: shell       # 'language: python' is an error on Travis CI Windows
       before_install:
         - choco install python --version 3.8.0
         - python -m pip install --upgrade pip
+      install: python -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
       env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
-  allow_failures:
-    - os: osx
 
-install:
-# - python --version
-- python -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
+#install: python -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
 
 script:
 - mkdir build && cd build
