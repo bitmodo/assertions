@@ -1,0 +1,24 @@
+name: Build & test CI
+
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.8'
+    - name: Setup environment
+      run: python3 -m pip install --disable-pip-version-check meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
+    - name: Setup
+      run: meson build
+    - name: Build
+      run: ninja -C build
+    - name: Test
+      run: ninja -C build test
