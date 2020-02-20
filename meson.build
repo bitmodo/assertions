@@ -1,6 +1,7 @@
 project('assertions', 'c',
         license: 'Unlicense',
-        version: '1.0')
+        version: '1.0',
+        default_options : ['c_std=c99'])
 
 compiler = meson.get_compiler('c')
 errored = false
