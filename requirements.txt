@@ -1,0 +1,5 @@
+# This is the pip requirements file used for when we build for CI
+
+meson==0.53.0
+gcovr==4.2
+ninja==1.9.0.post1
