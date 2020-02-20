@@ -18,32 +18,56 @@
 // Utility macros
 // All of these macros are pretty much helpers and are not meant to be
 // used outside of this header. They are really just here to make complex
-// things more simple.
+// things more simple. All of these macros are internal, as they have the
+// "ASSERTS_" prefix. Any macro with that prefix is subject to change at
+// any time without warning.
 
+// Expand the parameter. This is usefull when calling a macro from another
+// macro to ensure that it expands completely when the preprocessor runs.
 #define ASSERTS_EXPAND(x) x
 
+// Get the tail of the variadic arguments. This will check to see how many
+// arguments there are, and if there are more than 1, it just returns everything
+// after the first. This allows there to be only 1 argument.
 #define ASSERTS_VA_TAIL(...)                ASSERTS_EXPAND(ASSERTS_VA_TAIL_HELPER(ASSERTS_VA_TAIL_SELECT(_, __VA_ARGS__), __VA_ARGS__))
 
+// Helper macros for getting the tail of variadic arguments. These are what actually
+// implement the functionality.
 #define ASSERTS_VA_TAIL_HELPER(N, ...)      ASSERTS_EXPAND(ASSERTS_VA_TAIL_HELPER_(N, __VA_ARGS__))
 #define ASSERTS_VA_TAIL_HELPER_(N, ...)     ASSERTS_EXPAND(ASSERTS_VA_TAIL_HELPER_ ## N(__VA_ARGS__))
 #define ASSERTS_VA_TAIL_HELPER_1(Head)
 #define ASSERTS_VA_TAIL_HELPER_2(Head, ...) __VA_ARGS__
 
+// Get the head of the variadic arguments. This will just return whatever the first
+// argument is, and disregard the rest.
 #define ASSERTS_VA_HEAD(...)                ASSERTS_EXPAND(ASSERTS_VA_HEAD_HELPER(ASSERTS_VA_TAIL_SELECT(_, __VA_ARGS__), __VA_ARGS__))
 
+// Helper macros for getting the head of variadic arguments. These are what actually
+// implement the functionality.
 #define ASSERTS_VA_HEAD_HELPER(N, ...)      ASSERTS_EXPAND(ASSERTS_VA_HEAD_HELPER_(N, __VA_ARGS__))
 #define ASSERTS_VA_HEAD_HELPER_(N, ...)     ASSERTS_EXPAND(ASSERTS_VA_HEAD_HELPER_ ## N(__VA_ARGS__))
 #define ASSERTS_VA_HEAD_HELPER_1(Head)      Head
 #define ASSERTS_VA_HEAD_HELPER_2(Head, ...) Head
 
+// Construct a printf based on the number of arguments. This takes the file and line
+// to print at, and variadic arguments. It requires at least one, being the condition
+// that is being checked. The ones after that are optional. Without any extra arguments,
+// This will print a generic error message and a string version of the condition. With
+// one argument, it uses it as a format string instead of the generic error message. With
+// anything over one argument, they are used as format arguments being passed into printf.
 #define ASSERTS_VA_PRINTF(File, Line, ...)                           ASSERTS_EXPAND(ASSERTS_VA_PRINTF_HELPER(File, Line, ASSERTS_VA_HEAD(__VA_ARGS__), ASSERTS_VA_TAIL_SELECT(__VA_ARGS__), ASSERTS_VA_TAIL(__VA_ARGS__)))
 
+// Helper macros for creating a printf statement. These are what actually implement
+// the functionality.
 #define ASSERTS_VA_PRINTF_HELPER(File, Line, Condition, N, ...)      ASSERTS_EXPAND(ASSERTS_VA_PRINTF_HELPER_(File, Line, Condition, N, __VA_ARGS__))
 #define ASSERTS_VA_PRINTF_HELPER_(File, Line, Condition, N, ...)     ASSERTS_EXPAND(ASSERTS_VA_PRINTF_HELPER_ ## N(File, Line, Condition, __VA_ARGS__))
 #define ASSERTS_VA_PRINTF_HELPER_0(File, Line, Condition, Head)      fprintf(stderr, "[%s:%d] Assertion failed: `" #Condition "`\n", File, Line)
 #define ASSERTS_VA_PRINTF_HELPER_1(File, Line, Condition, Head)      fprintf(stderr, "[%s:%d] " Head "\n", File, Line)
 #define ASSERTS_VA_PRINTF_HELPER_2(File, Line, Condition, Head, ...) fprintf(stderr, "[%s:%d] " Head "\n", File, Line, __VA_ARGS__)
 
+// Tail selector macro. This takes variadic arguments, and depending
+// on how many there are will return 0, 1, or 2. If there is one argument,
+// 0 is returned. 1 for two arguments, and 2 for anything over 1.
 #define ASSERTS_VA_TAIL_SELECT(...)                      \
     ASSERTS_EXPAND(ASSERTS_VA_TAIL_SELECT64(__VA_ARGS__, \
             2, 2, 2, 2, 2, 2, 2, 2, 2, 2,                \
@@ -54,6 +78,7 @@
             2, 2, 2, 2, 2, 2, 2, 2, 2, 2,                \
             2, 1, 0, _))
 
+// Helper macro for tail select. This is basically where the magic happens.
 #define ASSERTS_VA_TAIL_SELECT64(                         \
         _01, _02, _03, _04, _05, _06, _07, _08, _09, _10, \
         _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, \
