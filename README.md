@@ -1,7 +1,7 @@
 # Assertions
 [![License](https://img.shields.io/github/license/codmf/assertions)](https://github.com/codmf/assertions/blob/master/UNLICENSE)
 [![Releases](https://img.shields.io/github/v/release/codmf/assertions?include_prereleases&sort=semver)](https://github.com/codmf/assertions/releases)
-[![Build status](https://img.shields.io/travis/codmf/assertions)](https://travis-ci.org/codmf/assertions)
+[![Build status](https://img.shields.io/github/workflow/status/codmf/assertions/Build%20&%20test%20CI)](https://github.com/codmf/assertions/actions)
 
 Assertions is a header-only assertions library for C and C++.
 The reason behind this is the lack of an assertion library for C.

@@ -5,23 +5,32 @@ project('assertions', 'c',
 compiler = meson.get_compiler('c')
 errored = false
 
-if not compiler.has_header('stdlib.h')
-    errored = true
-    warning('The compiler cannot find the stdlib header. Make sure you have a C standard library installed.')
-endif
-if not compiler.has_header('stdio.h')
-    errored = true
-    warning('The compiler cannot find the stdio header. Make sure you have a C standard library installed.')
-endif
+checks = [
+    {'type': 'header', 'name': 'stdlib.h'},
+    {'type': 'header', 'name': 'stdio.h'},
+    {'type': 'header', 'name': 'stddef.h'},
+    {'type': 'header', 'name': 'stdint.h'},
+    
+    {'type': 'function', 'name': 'fprintf', 'prefix': '#include <stdio.h>'},
+    {'type': 'function', 'name': 'abort', 'prefix': '#include <stdlib.h>'},
+]
 
-if not compiler.has_function('fprintf', prefix: '#include <stdio.h>')
-    errored = true
-    warning('The compiler could not find the fprintf function. Make sure you have a C standard library installed')
-endif
-if not compiler.has_function('abort', prefix: '#include <stdlib.h>')
-    errored = true
-    warning('The compiler could not find the abort function. Make sure you have a C standard library installed')
-endif
+foreach check : checks
+    type = check.get('type')
+    name = check.get('name')
+
+    if type == 'header'
+        if not compiler.check_header(name)
+            errored = true
+            warning('The compiler cannot find the ' + name + ' header. Make sure you have a C standard library installed.')
+        endif
+    elif type == 'function'
+        if not compiler.has_function(name, prefix: check.get('prefix'))
+            errored = true
+            warning('The compiler could not find the ' + name + ' function. Make sure you have a C standard library installed.')
+        endif
+    endif
+endforeach
 
 if errored
     error('Cannot continue the build as there are errors with the environment')

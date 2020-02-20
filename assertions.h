@@ -1,5 +1,5 @@
 /**
- * Assertions assertion library
+ * Assertions assertion library v1.0.0
  * This is a header-only C library to help write better tests
  * using a more complete assert than the one provided in the
  * standard C library.
@@ -16,6 +16,9 @@
 #include <stdio.h>
 
 // Utility macros
+// All of these macros are pretty much helpers and are not meant to be
+// used outside of this header. They are really just here to make complex
+// things more simple.
 
 #define ASSERTS_EXPAND(x) x
 
@@ -61,6 +64,7 @@
         _61, _62, _63, X, ...)                                           X
 
 // Assertion macros
+// These are the macros for the actual implementation of assertions.
 
 #define Assert_impl(File, Line, ...)                         \
   do {                                                       \
@@ -71,22 +75,190 @@
     }                                                        \
   } while(0)
 
+/**
+ * Assert that an expression is true
+ * Make an assertion that the specified expression is true. If it is
+ * not, print an error message and abort the program. This macro is
+ * variadic to allow for custom error formatting. By default, an
+ * error message will be constructed using only the condition. If two
+ * arguments are specified, the second will be interpreted as a message
+ * string, and will be printed instead of the condition. Any extra arguments
+ * will be interpreted as format arguments for the error message.
+ *
+ * Example:
+ * ```c
+ * Assert(1);
+ * Assert(1, "Expected success");
+ * Assert(1, "Expected success with %d", 1);
+ * ```
+ *
+ * Arguments:
+ *  - `Condition` This is the condition to be tested. If false, an error will occur
+ *  - [_Optional_] `Message` An error message to print if the condition is false
+ *  - [_Optional_] `...` Format parameters to pass to the print if the condition is false
+ */
 #define Assert(...) Assert_impl(__FILE__, __LINE__, __VA_ARGS__)
 
-// Equality macros
+// Comparison macros
+// These are macros to help compare one or more values. They are really just
+// here to provide an alternate way of writing an expression, but might receive
+// more functionality in the future.
 
-#define EQ(Actual, Ref) ((Actual) == (Ref))
+#define ASSERTS_EQ_(Actual, Expected) ((Actual) == (Expected))
+/**
+ * Check the equality of two values
+ * Take two values and make an exact comparison between the two.
+ * This is simply a cleaner way to write `Actual == Expected`.
+ * If the two values are not of a type that is meant to be directly
+ * compared, then don't use this macro. For example, rather than
+ * comparing the equality of two strings, it will just compare their
+ * pointers and almost always return false.
+ *
+ * Example:
+ * ```c
+ * Assert(EQ(1, 1)); // Passes
+ * Assert(EQ(0, 1)); // Fails
+ * ```
+ *
+ * Arguments:
+ *  - `Actual` The actual value that was calculated
+ *  - `Expected` The value that was expected to be received
+ */
+#define EQ(Actual, Expected) ASSERTS_EXPAND(ASSERTS_EQ_(Actual, Expected))
 
-#define Not(Condition) !(Condition)
+#define ASSERTS_NOT_(Condition) !(Condition)
+/**
+ * Invert a condition
+ * Take a condition and invert its value. For a zero or false
+ * condition, the result is 1, and for a non-zero or true condition,
+ * the result is zero. This is simply a cleaner and more expressive
+ * way of writing `!Condition`.
+ *
+ * Example:
+ * ```c
+ * Assert(Not(0)); // Passes
+ * Assert(Not(1)); // Fails
+ * ```
+ *
+ * Arguments:
+ *  - `Condition` The condition to negate
+ */
+#define Not(Condition) ASSERTS_EXPAND(ASSERTS_NOT_(Condition))
 
-#define LT(Actual, Ref) ((Actual) < (Ref))
+#define ASSERTS_LT_(Left, Right) ((Left) < (Right))
+/**
+ * Check if a value is less than another
+ * A simple check to see if one value is less than another.
+ * This is simply a cleaner and more expressive way of writing
+ * `Left < Right`.
+ * If the values are not meant to be directly compared, do not
+ * use this macro. It compares the values directly without checking
+ * for special types, and can cause things like floating point
+ * inaccuracy.
+ *
+ * Example:
+ * ```c
+ * Assert(LT(0, 1)); // Passes
+ * Assert(LT(1, 1)); // Fails
+ * Assert(LT(1, 0)); // Fails
+ * ```
+ *
+ * Arguments:
+ *  - `Left` The left-hand side of the expression
+ *  - `Right` The right-hand side of the expression
+ */
+#define LT(Left, Right) ASSERTS_EXPAND(ASSERTS_LT_(Left, Right))
 
-#define LE(Actual, Ref) ((Actual) <= (Ref))
+#define ASSERTS_LE_(Left, Right) ((Left) <= (Right))
+/**
+ * Check if a value is less than or equal to another
+ * A simple check to see if one value is less than or equal to another.
+ * This is simply a cleaner and more expressive way of writing
+ * `Left <= Right`.
+ * If the values are not meant to be directly compared, do not
+ * use this macro. It compares the values directly without checking
+ * for special types, and can cause things like floating point
+ * inaccuracy.
+ *
+ * Example:
+ * ```c
+ * Assert(LE(0, 1)); // Passes
+ * Assert(LE(1, 1)); // Passes
+ * Assert(LE(1, 0)); // Fails
+ * ```
+ *
+ * Arguments:
+ *  - `Left` The left-hand side of the expression
+ *  - `Right` The right-hand side of the expression
+ */
+#define LE(Left, Right) ASSERTS_EXPAND(ASSERTS_LE_(Left, Right))
 
-#define GT(Actual, Ref) ((Actual) > (Ref))
+#define ASSERTS_GT_(Left, Right) ((Left) > (Right))
+/**
+ * Check if a value is greater than another
+ * A simple check to see if one value is greater than another.
+ * This is simply a cleaner and more expressive way of writing
+ * `Left > Right`.
+ * If the values are not meant to be directly compared, do not
+ * use this macro. It compares the values directly without checking
+ * for special types, and can cause things like floating point
+ * inaccuracy.
+ *
+ * Example:
+ * ```c
+ * Assert(GT(1, 0)); // Passes
+ * Assert(GT(1, 1)); // Fails
+ * Assert(GT(0, 1)); // Fails
+ * ```
+ *
+ * Arguments:
+ *  - `Left` The left-hand side of the expression
+ *  - `Right` The right-hand side of the expression
+ */
+#define GT(Left, Right) ASSERTS_EXPAND(ASSERTS_GT_(Left, Right))
 
-#define GE(Actual, Ref) ((Actual) >= (Ref))
+#define ASSERTS_GE_(Left, Right) ((Left) >= (Right))
+/**
+ * Check if a value is greater than or equal to another
+ * A simple check to see if one value is greater than or equal to another.
+ * This is simply a cleaner and more expressive way of writing
+ * `Left >= Right`.
+ * If the values are not meant to be directly compared, do not
+ * use this macro. It compares the values directly without checking
+ * for special types, and can cause things like floating point
+ * inaccuracy.
+ *
+ * Example:
+ * ```c
+ * Assert(GE(1, 0)); // Passes
+ * Assert(GE(1, 1)); // Passes
+ * Assert(GE(0, 1)); // Fails
+ * ```
+ *
+ * Arguments:
+ *  - `Left` The left-hand side of the expression
+ *  - `Right` The right-hand side of the expression
+ */
+#define GE(Left, Right) ASSERTS_EXPAND(ASSERTS_GE_(Left, Right))
 
-#define Zero(Value) (Value) == 0
+#define ASSERTS_ZERO_(Value) (Value) == 0
+/**
+ * Check if a value is equal to zero
+ * A simple check to see if a value is equal to zero. This is
+ * simply a cleaner and more expressive way of writing `Value == 0`.
+ * If the value is not meant to be directly compared to zero, do not
+ * use this macro. It compares the value directly to zero without checking
+ * for special types, and can cause things like floating point
+ * inaccuracy.
+ *
+ * ```c
+ * Assert(Zero(0)); // Passes
+ * Assert(Zero(1)); // Fails
+ * ```
+ *
+ * Arguments:
+ *  - `Value` The value to compare with zero
+ */
+#define Zero(Value) ASSERTS_EXPAND(ASSERTS_ZERO_(Value))
 
 #endif // _ASSERTIONS_H
