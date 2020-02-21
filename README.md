@@ -210,7 +210,7 @@ Assert(Zero(1));  // Fails
 ## Other information
 Here is just a bit of other information that I thought might be useful when you're browsing through the code or trying to figure something out.
 
-## Naming scheme
+### Naming scheme
 You may have noticed that all of the macros provided by this project are either entirely uppercase or are capitalized.
 This naming scheme is primarily chosen to eliminate conflict with the C provided `assert` macro.
 By naming our macro `Assert` with a capital "a", we can allow users to use the C macro as well as ours at the same time.
