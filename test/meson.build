@@ -27,7 +27,7 @@ tests = [
     {'name': 'zero-fail', 'src': files('zero_fail.c'), 'type': 'fail'},
 ]
 
-if not compiler.has_header('assert.h')
+if not compiler.check_header('assert.h')
     warning('Could not run any tests, because the assert header could not be found. Make sure you have a C standard library installed.')
 else
     foreach test : tests
