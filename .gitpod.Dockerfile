@@ -2,7 +2,7 @@ FROM gitpod/workspace-full:build-branch-master
 
 USER root
 
-# Install packages
+# Install system packages
 RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
         python3=3.7.3-1 \
@@ -11,21 +11,27 @@ RUN apt-get update \
         python3-wheel=0.32.3-2 \
         valgrind=1:3.14.0-2ubuntu6 \
         ccache=3.6-1 \
-        libvirt-daemon-system=5.0.0-1ubuntu2.6 \
-        qemu-kvm \
-        libvirt-clients=5.0.0-1ubuntu2.6 \
+        libvirt=5.0.0-1ubuntu2.6 \
+        qemu-kvm=1:3.1+dfsg-2ubuntu3.7 \
     && /usr/sbin/update-ccache-symlinks \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Download and install Vagrant
 RUN curl -O https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb \
     && apt install ./vagrant_2.2.7_x86_64.deb \
+    && usermod -a -G libvirt gitpod \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 USER gitpod
 
-# Install packages
-RUN python3 -m pip install pip==20.0.2 meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1 \
-    && brew install git-flow \
-    && vagrant plugin install vagrant-libvirt \
-    && bundle install
+# Install pip packages
+RUN python3 -m pip install pip==20.0.2 meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
+
+# Install Homebrew packages
+RUN brew install git-flow
+
+# Install Ruby gems
+RUN bundle install
+
+# Install Vagrant plugins
+RUN vagrant plugin install vagrant-libvirt
