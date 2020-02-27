@@ -11,11 +11,21 @@ RUN apt-get update \
         python3-wheel=0.32.3-2 \
         valgrind=1:3.14.0-2ubuntu6 \
         ccache=3.6-1 \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* \
-    && /usr/sbin/update-ccache-symlinks
+        libvirt-daemon-system=5.0.0-1ubuntu2.6 \
+        qemu-kvm=1.2.0+noroms-0ubuntu2.12.10.7 \
+        libvirt-clients=5.0.0-1ubuntu2.6 \
+    && /usr/sbin/update-ccache-symlinks \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
+
+# Download and install Vagrant
+RUN curl -O https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb \
+    && apt install ./vagrant_2.2.7_x86_64.deb \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 USER gitpod
 
 # Install packages
 RUN python3 -m pip install pip==20.0.2 meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1 \
-    && brew install git-flow
+    && brew install git-flow \
+    && vagrant plugin install vagrant-libvirt \
+    && bundle install

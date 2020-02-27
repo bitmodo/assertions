@@ -3,4 +3,7 @@ image:
 vscode:
   extensions:
     - asabil.meson@1.2.0:sYg01j3Mm+6RJtaIRwyR5A==
-    - ms-vscode.cpptools@0.26.3:Pq/tmf2WN3SanVzB4xZc1g==
+    - bbenoist.vagrant@0.5.0:e2ktoGsnar8weYYRNdvexg==
+#    - wingrunr21.vscode-ruby@0.26.0:VakXVw0C77hAQ3U3AZTn1Q==
+#    - rebornix.ruby@0.26.0:RN+gv0dPjYfMqlcEEralhg==
+    - Orta.vscode-danger@1.0.1:cGUzsroSPSoihE2Yps+qbA==
