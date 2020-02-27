@@ -12,7 +12,7 @@ RUN apt-get update \
         valgrind=1:3.14.0-2ubuntu6 \
         ccache=3.6-1 \
         libvirt-daemon-system=5.0.0-1ubuntu2.6 \
-        qemu-kvm=1.2.0+noroms-0ubuntu2.12.10.7 \
+        qemu-kvm \
         libvirt-clients=5.0.0-1ubuntu2.6 \
     && /usr/sbin/update-ccache-symlinks \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
