@@ -25,14 +25,8 @@ RUN curl -O https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.de
 
 USER gitpod
 
-# Install pip packages
-RUN python3 -m pip install pip==20.0.2 meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
-
-# Install Homebrew packages
-RUN brew install git-flow
-
-# Install Ruby gems
-RUN bundle install
-
-# Install Vagrant plugins
-RUN vagrant plugin install vagrant-libvirt
+# Install packages
+RUN python3 -m pip install pip==20.0.2 meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1 \
+    && brew install git-flow \
+    && bundle install \
+    && vagrant plugin install vagrant-libvirt
