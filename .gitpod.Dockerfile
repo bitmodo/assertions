@@ -16,7 +16,8 @@ RUN apt-get update \
 
 # Install libvirt packages
 RUN apt-get update \
-    && apt-get build-dep ruby-libvirt=0.7.1-1 \
+    && apt-get install -yq --no-install-recommends \
+        ruby-libvirt=0.7.1-1 \
     && apt-get install -yq --no-install-recommends \
         qemu=1:3.1+dfsg-2ubuntu3.7 \
         qemu-kvm=1:3.1+dfsg-2ubuntu3.7 \
