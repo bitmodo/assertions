@@ -11,8 +11,9 @@ RUN apt-get update \
         python3-wheel=0.32.3-2 \
         valgrind=1:3.14.0-2ubuntu6 \
         ccache=3.6-1 \
-        libvirt=5.0.0-1ubuntu2.6 \
+        libvirt-daemon-system=5.0.0-1ubuntu2.6 \
         qemu-kvm=1:3.1+dfsg-2ubuntu3.7 \
+        libvirt-clients=5.0.0-1ubuntu2.6 \
     && /usr/sbin/update-ccache-symlinks \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
