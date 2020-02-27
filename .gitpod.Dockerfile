@@ -16,5 +16,6 @@ RUN apt-get update \
 
 USER gitpod
 
-# Install pip packages
-RUN python3 -m pip install pip==20.0.2 meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1
+# Install packages
+RUN python3 -m pip install pip==20.0.2 meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1 \
+    && brew install git-flow
