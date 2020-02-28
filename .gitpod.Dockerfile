@@ -30,6 +30,7 @@ RUN apt-get update \
         libvirt-dev=5.0.0-1ubuntu2.6 \
         zlib1g-dev=1:1.2.11.dfsg-1ubuntu2 \
         ruby-dev=1:2.5.1 \
+    && sudo virsh net-autostart virbr0 \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Download and install Vagrant
