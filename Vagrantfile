@@ -1,6 +1,7 @@
 Vagrant.configure("2") do |config|
     # Use Ubuntu 19.04 as the default box
     config.vm.box = "generic/ubuntu1904"
+    config.vm.box_version = "2.0.6"
 
     config.vm.provider :libvirt do |libvirt|
         # Use QEMU session instead of system connection
