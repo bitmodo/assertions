@@ -26,18 +26,18 @@ RUN apt-get update \
         ebtables=2.0.10.4+snapshot20181205-1ubuntu1 \
         dnsmasq-base=2.80-1ubuntu1 \
     && apt-get install -yq --no-install-recommends \
-        libxslt-dev=1.1.32-2ubuntu0.2 \
+        libxslt-dev \
         libxml2-dev=2.9.4+dfsg1-7ubuntu3 \
         libvirt-dev=5.0.0-1ubuntu2.6 \
         zlib1g-dev=1:1.2.11.dfsg-1ubuntu2 \
         ruby-dev=1:2.5.1 \
-#    && libvirtd --daemon \
+    && libvirtd --daemon \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Download and install Vagrant
 RUN curl -O https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb \
     && apt install ./vagrant_2.2.7_x86_64.deb \
-    && usermod -a -G libvirt,libvirtd gitpod \
+    && usermod -a -G libvirt gitpod \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 USER gitpod
