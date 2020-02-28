@@ -21,6 +21,7 @@ RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
         qemu=1:3.1+dfsg-2ubuntu3.7 \
         qemu-kvm=1:3.1+dfsg-2ubuntu3.7 \
+        qemu-utils=1:3.1+dfsg-2ubuntu3.6 \
         libvirt-daemon-system=5.0.0-1ubuntu2.6 \
         libvirt-clients=5.0.0-1ubuntu2.6 \
         ebtables=2.0.10.4+snapshot20181205-1ubuntu1 \
@@ -31,7 +32,7 @@ RUN apt-get update \
         libvirt-dev=5.0.0-1ubuntu2.6 \
         zlib1g-dev=1:1.2.11.dfsg-1ubuntu2 \
         ruby-dev=1:2.5.1 \
-    && libvirtd --daemon \
+#    && libvirtd --daemon \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Download and install Vagrant
