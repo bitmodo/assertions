@@ -26,7 +26,7 @@ RUN apt-get update \
         ebtables=2.0.10.4+snapshot20181205-1ubuntu1 \
         dnsmasq-base=2.80-1ubuntu1 \
     && apt-get install -yq --no-install-recommends \
-        libxslt-dev \
+        libxslt1-dev=1.1.32-2ubuntu0.2 \
         libxml2-dev=2.9.4+dfsg1-7ubuntu3 \
         libvirt-dev=5.0.0-1ubuntu2.6 \
         zlib1g-dev=1:1.2.11.dfsg-1ubuntu2 \
