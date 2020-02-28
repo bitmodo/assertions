@@ -21,8 +21,8 @@ RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
         qemu=1:3.1+dfsg-2ubuntu3.7 \
         qemu-kvm=1:3.1+dfsg-2ubuntu3.7 \
-        qemu-utils=1:3.1+dfsg-2ubuntu3.6 \
-        qemu-block-extra=1:3.1+dfsg-2ubuntu3.6 \
+        qemu-utils=1:3.1+dfsg-2ubuntu3.7 \
+        qemu-block-extra=1:3.1+dfsg-2ubuntu3.7 \
         libvirt-daemon-system=5.0.0-1ubuntu2.6 \
         libvirt-clients=5.0.0-1ubuntu2.6 \
         ebtables=2.0.10.4+snapshot20181205-1ubuntu1 \
