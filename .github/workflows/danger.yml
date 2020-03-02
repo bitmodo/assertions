@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Setup Ruby
-      uses: actions/setup-ruby@v1
+    - name: Setup environment
+      run: |
+        bundle install --jobs 4 --retry 3
     - name: Run Danger
       uses: danger/danger@6.3.0
     # - name: Setup Ruby
