@@ -1,0 +1,14 @@
+name: Danger check
+
+on: [push, pull_request]
+
+jobs:
+  danger:
+    name: Danger Check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Bundle Install
+      run: bundle install
+    - name: Danger
+      run: bundle exec danger --verbose

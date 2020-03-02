@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   build:
+    name: CI Build
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -47,6 +48,7 @@ jobs:
     - name: Test
       run: ninja -C build test
   minify:
+    name: File Minify
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
