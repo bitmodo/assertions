@@ -1,3 +1,6 @@
+tasks:
+  - init:
+      bundle install
 image:
   file: .gitpod.Dockerfile
 vscode:
