@@ -20,4 +20,6 @@ jobs:
         gem install bundler
         bundle install --jobs 4 --retry 3
     - name: Danger
-      run: bundle exec danger --verbose
+      run: |
+        export DANGER_GITHUB_API_TOKEN=${{ secrets.GITHUB_TOKEN }}
+        bundle exec danger --verbose
