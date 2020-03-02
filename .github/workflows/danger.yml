@@ -8,18 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    # - name: Setup environment
-    #   run: |
-    #     bundle install --jobs 4 --retry 3
-    # - name: Run Danger
-    #   uses: danger/danger@6.3.0
     - name: Setup Ruby
       uses: actions/setup-ruby@v1
     - name: Setup environment
       run: |
-        gem install bundler
+        gem install bundler -v 2.1.4
         bundle install --jobs 4 --retry 3
-    - name: Danger
+    - name: Run Danger
       run: |
         export DANGER_GITHUB_API_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        bundle exec danger --verbose
+        bundle exec danger
