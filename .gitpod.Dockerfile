@@ -45,6 +45,6 @@ USER gitpod
 
 # Install packages
 RUN python3 -m pip install pip==20.0.2 meson==0.53.0 gcovr==4.2 ninja==1.9.0.post1 \
-    && brew install git-flow
-#    && bundle install \
+    && brew install git-flow \
+    && bundle install
 #    && vagrant plugin install vagrant-libvirt
