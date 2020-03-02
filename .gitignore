@@ -4,3 +4,4 @@ cmake-*/
 vgcore.*
 core.*
 .vagrant/
+.bundle/
