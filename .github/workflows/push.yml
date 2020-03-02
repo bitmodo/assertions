@@ -1,4 +1,4 @@
-name: Build & test CI
+name: Push Actions
 
 on: [push]
 
