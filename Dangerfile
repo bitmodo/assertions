@@ -8,6 +8,8 @@ has_license_changes = git.modified_files.include? "UNLICENSE"
 has_app_changes = git.modified_files.include? "assertions.h"
 # Check if any of the tests were changed
 has_test_changes = !git.modified_files.grep(/test/).empty?
+# Check if the PR is trivial
+declared_trivial = (github.pr_title + github.pr_body).include?("#trivial") || !has_app_changes
 
 # Allow Bitmodo members to bypass some checks
 unless github.api.organization_member?('bitmodo', github.pr_author)
@@ -34,7 +36,7 @@ else
 end
 
 # Warn if the header has changed but the tests have not
-warn "Tests have not been updated" if has_app_changes && !has_test_changes
+warn "Tests have not been updated" if has_app_changes && !has_test_changes && !declared_trivial
 # Create a warning if the PR is a work in progress
 warn "PR is classed as Work in Progress" if github.pr_title.include? "[WIP]"
 # Warn if the PR is not assigned to anyone
