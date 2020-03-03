@@ -9,8 +9,8 @@
  * apart from variadic utility macros.
  */
 
-#ifndef _ASSERTIONS_H
-#define _ASSERTIONS_H
+#ifndef ASSERTIONS_H
+#define ASSERTIONS_H
 
 #include <stdlib.h>
 #include <stdio.h>
