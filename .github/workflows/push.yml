@@ -47,6 +47,7 @@ jobs:
       run: ninja -C build
     - name: Test
       run: ninja -C build test
+
   minify:
     name: File Minify
     runs-on: ubuntu-latest
@@ -60,3 +61,17 @@ jobs:
       with:
         name: Minified artifacts
         path: artifacts
+
+  semver:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npx semantic-release
