@@ -35,7 +35,6 @@ end
 
 # Warn if the header has changed but the tests have not
 warn "Tests have not been updated" if has_app_changes && !has_test_changes
-
 # Create a warning if the PR is a work in progress
 warn "PR is classed as Work in Progress" if github.pr_title.include? "[WIP]"
 # Warn if the PR is not assigned to anyone
